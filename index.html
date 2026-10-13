@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Campagna Ashkar</title>
+<meta name="theme-color" content="#04070d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04070d;--pan:#0a1420;--pan2:#0d1a28;--line:#1d3549;--line2:#2b4a60;--fg:#dceaf3;--mut:#7f9bad;
+ --cy:#63d2ea;--am:#ffa63c;--bl:#4aa8ff;--ok:#6fe0a8;
+ box-sizing:border-box}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:"IBM Plex Sans",system-ui,sans-serif;
+ line-height:1.55;display:flex;flex-direction:column;overflow:hidden}
+h1,h2,h3,button{font-family:"Chakra Petch",sans-serif}
+:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+
+/* ---- scelta ---- */
+#scelta{flex:1;overflow-y:auto;padding:clamp(20px,5vh,54px) 20px;
+ padding-top:calc(clamp(20px,5vh,54px) + env(safe-area-inset-top,0px))}
+.wrap{max-width:1060px;margin:0 auto}
+.testa{margin-bottom:clamp(20px,4vh,36px)}
+h1{font-size:clamp(1.9rem,6vw,2.7rem);margin:0 0 6px;letter-spacing:.04em}
+.sub{color:var(--mut);margin:0;font-size:.95rem}
+.cards{display:grid;gap:14px}
+@media(min-width:800px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{display:flex;flex-direction:column;text-align:left;width:100%;cursor:pointer;
+ border:1px solid var(--line);background:var(--pan);padding:22px;color:inherit;font:inherit}
+.card:hover,.card:focus-visible{background:var(--pan2)}
+.card .ico{width:54px;height:54px;margin-bottom:14px}
+.card h2{margin:0 0 6px;font-size:1.12rem}
+.card p{margin:0;color:var(--mut);font-size:.86rem}
+.card .ruolo{margin-top:12px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+ font-family:"Chakra Petch",sans-serif}
+.card.tab:hover{border-color:var(--cy)} .card.tab h2{color:var(--cy)}
+.card.nom:hover{border-color:var(--am)} .card.nom h2{color:var(--am)}
+.card.pan:hover{border-color:var(--bl)} .card.pan h2{color:var(--bl)}
+.flusso{margin-top:26px;border:1px solid var(--line);background:var(--pan);padding:18px}
+.flusso h3{margin:0 0 10px;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cy)}
+.flusso ol{margin:0;padding-left:20px;font-size:.87rem;color:var(--mut)}
+.flusso li{margin-bottom:5px}
+.flusso b{color:var(--fg)}
+.nota{margin-top:16px;border-left:3px solid var(--am);padding:9px 14px;color:var(--mut);font-size:.83rem}
+
+/* ---- barra dell'app aperta ---- */
+#barra{display:none;align-items:center;gap:12px;padding:8px 14px;
+ padding-top:calc(8px + env(safe-area-inset-top,0px));
+ border-bottom:1px solid var(--line);background:#071119;flex:none}
+#barra button{background:var(--pan2);border:1px solid var(--line2);color:var(--fg);
+ padding:6px 12px;cursor:pointer;font-size:.85rem}
+#barra button:hover{border-color:var(--cy);color:var(--cy)}
+#barra .nome{font-family:"Chakra Petch",sans-serif;font-size:.95rem;letter-spacing:.04em}
+#barra .punto{width:9px;height:9px;border-radius:50%;flex:none}
+#telaio{flex:1;width:100%;border:0;display:none;background:var(--bg)}
+#carico{display:none;flex:1;align-items:center;justify-content:center;color:var(--mut);font-size:.9rem}
+</style>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="application-name" content="Campagna Ashkar">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ashkar">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/app-apple-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/app-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/app-512.png">
+</head>
+<body>
+
+<div id="barra">
+  <button id="indietro">‹ Cambia app</button>
+  <span class="punto" id="punto"></span>
+  <span class="nome" id="nome-app"></span>
+</div>
+<div id="carico">Apertura…</div>
+<iframe id="telaio" title="App della campagna"></iframe>
+
+<div id="scelta">
+ <div class="wrap">
+  <div class="testa">
+    <h1>Campagna Ashkar</h1>
+    <p class="sub">Regolamento casalingo in stile X‑COM per Infinity N5 · Nomadi contro PanOceania</p>
+  </div>
+
+  <div class="cards">
+    <button class="card tab" data-app="tabellone">
+      <svg class="ico" viewBox="0 0 48 48" aria-hidden="true">
+        <polygon points="24,3 42,13.5 42,34.5 24,45 6,34.5 6,13.5" fill="none" stroke="#63d2ea" stroke-width="2"/>
+        <path d="M24 14 L13 28 M24 14 L35 28 M13 28 L35 28 M13 28 L24 36 M35 28 L24 36" stroke="#63d2ea" stroke-width="1.4" opacity=".55"/>
+        <circle cx="24" cy="14" r="4" fill="#0a141c" stroke="#63d2ea" stroke-width="2.2"/>
+        <circle cx="13" cy="28" r="3.2" fill="#0a141c" stroke="#63d2ea" stroke-width="2.2"/>
+        <circle cx="35" cy="28" r="3.2" fill="#0a141c" stroke="#63d2ea" stroke-width="2.2"/>
+        <circle cx="24" cy="36" r="3.2" fill="#0a141c" stroke="#63d2ea" stroke-width="2.2"/>
+      </svg>
+      <h2>Tabellone</h2>
+      <p>Mappa del mondo, scenari per nodo, risultati delle partite — sul tavolo o ai dadi — e dispacci alle due plance.</p>
+      <span class="ruolo">comune · un dispositivo solo</span>
+    </button>
+
+    <button class="card nom" data-app="nomadi">
+      <svg class="ico" viewBox="0 0 48 48" aria-hidden="true">
+        <polygon points="24,3 42,13.5 42,34.5 24,45 6,34.5 6,13.5" fill="none" stroke="#ffa63c" stroke-width="2"/>
+        <path d="M11 18 H37 M14 25 H34 M17 32 H31" stroke="#ffa63c" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="39" r="2.4" fill="#ffa63c"/>
+      </svg>
+      <h2>Comando Nomade</h2>
+      <p>Roster, officina, albero tecnologico, infermeria, addestramento e invio della squadra al calcolatore.</p>
+      <span class="ruolo">privata · giocatore nomade</span>
+    </button>
+
+    <button class="card pan" data-app="panoceania">
+      <svg class="ico" viewBox="0 0 48 48" aria-hidden="true">
+        <polygon points="24,3 42,13.5 42,34.5 24,45 6,34.5 6,13.5" fill="none" stroke="#4aa8ff" stroke-width="2"/>
+        <path d="M11 18 H37 M14 25 H34 M17 32 H31" stroke="#4aa8ff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="39" r="2.4" fill="#4aa8ff"/>
+      </svg>
+      <h2>Comando PanOceaniano</h2>
+      <p>Le stesse funzioni, con il database e i colori della sua fazione.</p>
+      <span class="ruolo">privata · giocatore panoceaniano</span>
+    </button>
+  </div>
+
+  <div class="flusso">
+    <h3>Come girano i dati</h3>
+    <ol>
+      <li>Si gioca la missione, sul tavolo o <b>ai dadi</b> dal tabellone.</li>
+      <li>Sul <b>tabellone</b> si registra nodo, attaccante, esito e bottino raccolto.</li>
+      <li>Il tabellone aggiorna la mappa e spedisce un <b>dispaccio</b> a ogni fazione coinvolta.</li>
+      <li>Sulla <b>plancia</b> il dispaccio compare nel Quadro: un clic e accredita punti, bottino e territori.</li>
+      <li>Poi si risolve il dopo‑partita, si spende, si ricerca, si produce, si avanza il turno.</li>
+    </ol>
+  </div>
+  <p class="nota">Le tre sezioni hanno archivi separati e passano i dispacci fra loro. Da qualunque sezione, <b>Cambia app</b> in alto a sinistra riporta qui.</p>
+ </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const APP={
+  tabellone:{nome:'Tabellone — Mondo di Ashkar',col:'#63d2ea'},
+  nomadi:{nome:'Comando Nomade',col:'#ffa63c'},
+  panoceania:{nome:'Comando PanOceaniano',col:'#4aa8ff'}
+};
+const $=s=>document.querySelector(s);
+const telaio=$('#telaio'), scelta=$('#scelta'), barra=$('#barra'), carico=$('#carico');
+
+function apri(k){
+  const a=APP[k]; if(!a) return;
+  scelta.style.display='none';
+  barra.style.display='flex';
+  telaio.style.display='none';
+  carico.style.display='flex';
+  $('#nome-app').textContent=a.nome;
+  $('#punto').style.background=a.col;
+  document.documentElement.style.setProperty('--faz',a.col);
+  try{ sessionStorage.setItem('ashkar.app',k) }catch(e){}
+  telaio.addEventListener('load',function una(){
+    telaio.removeEventListener('load',una);
+    carico.style.display='none'; telaio.style.display='block';
+    try{ if(window.claude && !telaio.contentWindow.claude) telaio.contentWindow.claude=window.claude }catch(e){}
+  });
+  caricaApp(k, telaio);
+}
+function chiudi(){
+  telaio.style.display='none'; carico.style.display='none';
+  // svuotare srcdoc non basta: finche' l'attributo esiste ha la precedenza su src
+  telaio.removeAttribute('srcdoc'); telaio.removeAttribute('src');
+  barra.style.display='none'; scelta.style.display='block';
+  try{ sessionStorage.removeItem('ashkar.app') }catch(e){}
+}
+document.querySelectorAll('.card').forEach(b=>b.addEventListener('click',()=>apri(b.dataset.app)));
+$('#indietro').addEventListener('click',chiudi);
+window.addEventListener('keydown',e=>{ if(e.key==='Escape' && barra.style.display==='flex') chiudi() });
+window.__APRI_APP__=apri;
+})();
+</script>
+<script>
+function caricaApp(k,telaio){ telaio.removeAttribute("srcdoc"); telaio.src="./"+k+"/" }
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>

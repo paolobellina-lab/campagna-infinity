@@ -1,0 +1,76 @@
+{
+  "id": "/ashkar/",
+  "name": "Campagna Ashkar — Infinity N5",
+  "short_name": "Ashkar",
+  "description": "Tabellone comune e due plance di fazione per una campagna casalinga di Infinity N5 in stile X-COM.",
+  "lang": "it",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#04070d",
+  "theme_color": "#04070d",
+  "categories": [
+    "games",
+    "utilities",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./icons/app-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/app-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/app-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tabellone",
+      "url": "./tabellone/",
+      "icons": [
+        {
+          "src": "./icons/tabellone-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Comando Nomade",
+      "url": "./nomadi/",
+      "icons": [
+        {
+          "src": "./icons/nomadi-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Comando PanOceaniano",
+      "url": "./panoceania/",
+      "icons": [
+        {
+          "src": "./icons/panoceania-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
