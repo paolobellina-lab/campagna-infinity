@@ -239,7 +239,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums}
        <div class="seg mini" id="bot-cl" style="margin-top:6px;flex-wrap:wrap"></div>
        <div class="botgrid" id="bot-lista"></div>
        <p class="sub" id="bot-rias" style="margin:8px 0 0">Nessun pezzo segnato.</p>
-       <div class="note">Tre pezzi per partita è il tetto del saccheggio sui nemici: quelli recuperati sui propri caduti non contano e non si segnano qui, li gestisce il Campo di battaglia.</div>
+       <div class="note">I pezzi si contano per <b>classe d’armeria</b>, non per arma singola: un pezzo di Supporto Pesante diventa l’HMG sul profilo che ce l’ha e lo Spitfire su un altro. Così il bottino si scambia fra unità diverse senza inventare profili. Tre pezzi per partita è il tetto del saccheggio sui nemici: quelli recuperati sui propri caduti non contano e li gestisce il Campo di battaglia.</div>
      </div>
      <div class="row" style="margin-top:10px">
        <div style="flex:0 0 auto"><button class="btn pri" id="btn-reg">Registra e spedisci</button></div>
@@ -488,23 +488,18 @@ $('#btn-tira').onclick=tiraDadi;
 
 /* ================= BOTTINO A QUANTITA' ================= */
 const BOTTINO=[
- ['Armeria Base',['Combi Rifle','Rifle','Carbine','Boarding Shotgun','Light Shotgun','Chain Rifle',
-                  'Pistol','Heavy Pistol','CC Weapon','Deployable Cover','Smoke Grenades']],
- ['Medico-Tecnico',['MediKit','GizmoKit','D-Charges','Sensor','Baggage']],
- ['Ottica',['Multispectral Visor L1','Multispectral Visor L2','X-Visor','Albedo','360 Visor']],
- ['Elettronica',['Hacking Device','Hacking Device Plus','Killer Hacking Device','Repeater',
-                 'Deployable Repeater','Deactivator','ECM','Pitcher']],
- ['Supporto Pesante',['Heavy Machine Gun','Spitfire','Red Fury','Feuerbach','HMG (AP)']],
- ['Tiratore Scelto',['Sniper Rifle','MULTI Sniper Rifle','Marksman Rifle','MULTI Marksman Rifle']],
- ['Guerra Ravvicinata',['Monofilament CC Weapon','Nanopulser','Flammenspeer','AP CC Weapon','DA CC Weapon','Chest Mine']],
- ['Artiglieria',['Missile Launcher','Panzerfaust','Grenade Launcher','Mortar','Akrylat-Kanone']],
- ['Tute',['TO Camouflage','Holoprojector L1','Holoprojector L2']]
+ ['Armi',['Armi CC','Pistole','Fucili','Fucili a sagoma','Fucili di precisione',
+          'Mitragliatrici','Lanciamissili','Lanciagranate','Armi a impulso']],
+ ['Materiale',['Granate','Mine e trappole','Ottica','Elettronica','Strumenti']],
+ ['Armature',['Armatura Leggera','Armatura Media','Armatura Pesante']],
+ ['Moduli',['Rampino','Suole Ammortizzate','Dispenser di Mine','Kit da Terreno','Paracadute',
+            'Jetpack','Mantello Mimetico','Modulo di Sopravvivenza','Termo-ottica']]
 ];
 let botFz='nomadi', botCl=BOTTINO[0][0];
 const bot={nomadi:{},panoceania:{}};
 function botRender(){
   const chi=$('#bot-chi'); Array.prototype.forEach.call(chi.children,b=>b.classList.toggle('on',b.dataset.f===botFz));
-  const cl=$('#bot-cl'); cl.innerHTML='';
+  const cl=$('#bot-cl'); cl.innerHTML=''; cl.style.display=BOTTINO.length>1?'flex':'none';
   BOTTINO.forEach(g=>{
     const b=el('button',botCl===g[0]?'on':'',g[0]);
     const n=g[1].reduce((k,x)=>k+(bot[botFz][x]||0),0);

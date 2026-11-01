@@ -58,14 +58,6 @@ h1{font-size:clamp(1.9rem,6vw,2.7rem);margin:0 0 6px;letter-spacing:.04em}
 #telaio{flex:1;width:100%;border:0;display:none;background:var(--bg)}
 #carico{display:none;flex:1;align-items:center;justify-content:center;color:var(--mut);font-size:.9rem}
 </style>
-<link rel="manifest" href="./manifest.webmanifest">
-<meta name="application-name" content="Campagna Ashkar">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Ashkar">
-<link rel="apple-touch-icon" sizes="180x180" href="./icons/app-apple-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/app-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="./icons/app-512.png">
 </head>
 <body>
 
@@ -166,8 +158,7 @@ function apri(k){
 }
 function chiudi(){
   telaio.style.display='none'; carico.style.display='none';
-  // svuotare srcdoc non basta: finche' l'attributo esiste ha la precedenza su src
-  telaio.removeAttribute('srcdoc'); telaio.removeAttribute('src');
+  telaio.srcdoc=''; telaio.removeAttribute('src');
   barra.style.display='none'; scelta.style.display='block';
   try{ sessionStorage.removeItem('ashkar.app') }catch(e){}
 }
@@ -178,12 +169,7 @@ window.__APRI_APP__=apri;
 })();
 </script>
 <script>
-function caricaApp(k,telaio){ telaio.removeAttribute("srcdoc"); telaio.src="./"+k+"/" }
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
+function caricaApp(k,telaio){ telaio.src="./"+k+"/" }
 </script>
 </body>
 </html>
